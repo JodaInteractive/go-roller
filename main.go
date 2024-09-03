@@ -1,11 +1,11 @@
 package main
 
 import (
+	"math"
 	"math/rand"
 	"os"
 	"regexp"
 	"strconv"
-	"time"
 )
 
 func main() {
@@ -48,14 +48,41 @@ func roll(roller string) {
 			os.Exit(0)
 		}
 		sides = s
+	} 
+	
+	println("Results:")
+	results := []int{}
+	for i := 0; i < quantity; i++ {
+		result := roll_die(sides)
+		println(result)
+		results = append(results, result)
 	}
 
-	for i := 0; i < quantity; i++ {
-		println(strconv.Itoa(roll_die(sides)))
+	if quantity > 1 {
+		total := 0
+		for _, result := range results {
+			total += result
+		}
+		println("Total: " + strconv.Itoa(total))
+
+		lowest := math.MaxInt32
+		for _, result := range results {
+			if result < lowest {
+				lowest = result
+			}
+		}
+		println("Lowest: " + strconv.Itoa(lowest))
+
+		highest := 0
+		for _, result := range results {
+			if result > highest {
+				highest = result
+			}
+		}
+		println("Highest: " + strconv.Itoa(highest))
 	}
 }
 
 func roll_die(sides int) int {
-	rand.Seed(time.Now().UnixNano())
 	return rand.Intn(sides) + 1
 }
