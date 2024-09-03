@@ -26,3 +26,9 @@ jobs:
 
     - name: Test
       run: go test -v ./...
+
+    - name: Upload Go executable
+      uses: actions/upload-artifact@v2
+      with:
+        name: go-roller
+        path: './go-roller'
